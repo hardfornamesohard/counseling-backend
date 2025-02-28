@@ -4,13 +4,16 @@ package com.wave.counseling.web;
  * @author ziwei.huang
  * @date 2025/2/28 14:26
  */
-public class Result {
+public class Result<T> {
     public int code;
     public String message;
-    public Object data;
+    public T data;
 
     public static Result buildSuccess(String message){
         return new Result(200, message, null);
+    }
+    public static Result buildSuccess(Object data){
+        return new Result(200, "请求成功", data);
     }
 
     public int getCode() {
@@ -29,15 +32,22 @@ public class Result {
         this.message = message;
     }
 
-    public Object getData() {
+    public T getData() {
         return data;
     }
 
-    public void setData(Object data) {
+    public void setData(T data) {
         this.data = data;
     }
 
-    public Result(int code, String message, Object data) {
+    public static Result buildFail(String message){
+        return new Result(401, message, null);
+    }
+    public static Result buildFail(String message, int code){
+        return new Result(code, message, null);
+    }
+
+    public Result(int code, String message, T data) {
         this.code = code;
         this.message = message;
         this.data = data;

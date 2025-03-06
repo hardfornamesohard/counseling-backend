@@ -46,6 +46,9 @@ public class Result<T> {
     public static Result buildFail(String message, int code){
         return new Result(code, message, null);
     }
+    public static Result buildFail(String message, int code, Throwable e){
+        return new Result(code, message, e.getMessage());
+    }
 
     public Result(int code, String message, T data) {
         this.code = code;

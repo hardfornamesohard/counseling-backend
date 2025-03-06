@@ -55,4 +55,8 @@ public class Result<T> {
         this.message = message;
         this.data = data;
     }
+
+    public static Result<String> intercepted(){
+        return new Result<>(401, "请求被拦截", null);
+    }
 }

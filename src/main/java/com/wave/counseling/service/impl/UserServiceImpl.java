@@ -9,6 +9,7 @@ import com.wave.counseling.utils.MD5Util;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author ziwei.huang
@@ -36,4 +37,13 @@ public class UserServiceImpl implements UserService {
         return service.getOne(queryWrapper);
 
     }
+
+    @Override
+    public List<User> findAll() {
+        return service.lambdaQuery()
+                .select(User::getId, User::getName, User::getRole, User::getEmail,
+                        User::getNickname, User::getGmtCreated, User::getGmtModified)
+                .list();
+    }
+
 }

@@ -14,6 +14,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @RestController
 public class AuthController {
@@ -33,6 +34,7 @@ public class AuthController {
 
         response.setHeader("Session", sessionId);
         response.setHeader("x-nickname", user.getNickname());
+        response.setHeader("x-role", String.valueOf(user.getRole()));
         SessionManager.addSession(sessionId, user);
         return Result.buildSuccess("登录成功");
     }
@@ -57,5 +59,16 @@ public class AuthController {
         }else{
             return Result.buildSuccess("用户未登录！");
         }
+    }
+
+    @GetMapping("/users")
+    public Result<List<User>> getUsers(@RequestParam("session") String session){
+        final User user = SessionManager.find(session);
+        if (user.getRole() != 2){
+            return Result.buildFail("此接口仅管理员访问", 401);
+        }
+        final List<User> all = userService.findAll();
+        System.out.println(all);
+        return Result.buildSuccess(all);
     }
 }

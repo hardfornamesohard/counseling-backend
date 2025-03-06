@@ -1,6 +1,8 @@
 package com.wave.counseling.interceptor;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wave.counseling.utils.SessionManager;
+import com.wave.counseling.web.Result;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -18,7 +20,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         // 获取请求的URL
         if ("OPTIONS".equals(request.getMethod().toUpperCase())){
-            System.out.println("METHOD:OPTIONS");
+
             return true;
         }
         String url = request.getRequestURI();
@@ -34,6 +36,10 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         }
 //        // 不符合条件的，跳转到登录界面
 //        request.getRequestDispatcher("/auth").forward(request, response);
+        ObjectMapper mapper = new ObjectMapper();
+        response.setHeader("Content-Type", "application/json;charset=UTF-8");
+        response.sendRedirect("/login");
+        response.getWriter().write(mapper.writeValueAsString(Result.intercepted()));
         return false;
     }
 }

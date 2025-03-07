@@ -1,6 +1,7 @@
 package com.wave.counseling.service;
 
 import com.wave.counseling.model.User;
+import com.wave.counseling.web.Result;
 
 import java.util.List;
 
@@ -14,4 +15,7 @@ public interface UserService {
 
     List<User> findAll();
 
+    Result<String> changePassword(User user);
+
+    Result<String> changeOther(User user);
 }

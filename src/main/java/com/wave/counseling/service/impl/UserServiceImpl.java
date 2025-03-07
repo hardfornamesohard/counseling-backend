@@ -6,6 +6,7 @@ import com.wave.counseling.mapper.IUserService;
 import com.wave.counseling.model.User;
 import com.wave.counseling.service.UserService;
 import com.wave.counseling.utils.MD5Util;
+import com.wave.counseling.web.Result;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -44,6 +45,29 @@ public class UserServiceImpl implements UserService {
                 .select(User::getId, User::getName, User::getRole, User::getEmail,
                         User::getNickname, User::getGmtCreated, User::getGmtModified)
                 .list();
+    }
+
+    @Override
+    public Result<String> changePassword(User user) {
+        final boolean update = service.lambdaUpdate()
+                .set(User::getSecret, user.getSecret())
+                .eq(User::getId, user.getId()).update();
+        if (update){
+            return Result.buildSuccess("密码修改成功！");
+        }
+        return Result.buildFail( "用户不存在", 400);
+    }
+
+    @Override
+    public Result<String> changeOther(User user) {
+        final boolean update = service.lambdaUpdate()
+                .set(User::getEmail, user.getEmail())
+                .set(User::getNickname, user.getNickname())
+                .eq(User::getId, user.getId()).update();
+        if (update){
+            return Result.buildSuccess("用户信息修改成功！");
+        }
+        return Result.buildFail( "用户不存在", 400);
     }
 
 }

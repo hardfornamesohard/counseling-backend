@@ -61,14 +61,23 @@ public class AuthController {
         }
     }
 
-    @GetMapping("/users")
+    @GetMapping("/admin-api/users")
     public Result<List<User>> getUsers(@RequestParam("session") String session){
         final User user = SessionManager.find(session);
         if (user.getRole() != 2){
             return Result.buildFail("此接口仅管理员访问", 401);
         }
         final List<User> all = userService.findAll();
-        System.out.println(all);
         return Result.buildSuccess(all);
+    }
+
+    @PostMapping("/admin-api/changePassword")
+    public Result<String> changePassword(@RequestBody User user){
+        return userService.changePassword(user);
+    }
+
+    @PostMapping("/admin-api/changeOther")
+    public Result<String> changeOther(@RequestBody User user){
+        return userService.changeOther(user);
     }
 }

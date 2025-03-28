@@ -15,6 +15,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.wave.counseling.model.handler.RoleTypeHandler;
 
 import java.sql.Timestamp;
+import java.util.Objects;
 
 @TableName("counseling_user") // 表示映射到数据库中的 user 表
 public class User {
@@ -121,6 +122,18 @@ public class User {
                 ", gmtCreated=" + gmtCreated +
                 ", gmtModified=" + gmtModified +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(name, user.name) && role == user.role && Objects.equals(email, user.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, role, email);
     }
 }
 

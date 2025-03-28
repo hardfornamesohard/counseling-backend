@@ -12,6 +12,7 @@ import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.Set;
 import java.util.UUID;
 
 @RestController
@@ -27,11 +28,11 @@ public class UserInfoController {
     @GetMapping("/find")
     public Result<UserInfo> findByUser(@RequestParam String session) {
         if (session == null) {
-            return Result.buildSuccess("");
+            return Result.buildFail("请先登录", 400);
         }
         User user = SessionManager.find(session);
         if (user == null) {
-            return Result.buildSuccess("");
+            return Result.buildFail("用户信息不存在", 404);
         }
         return Result.buildSuccess(userInfoService.findByUser(user));
     }
@@ -81,6 +82,16 @@ public class UserInfoController {
         }
         return userInfoService.saveOrUpdate(userInfo) == true?
                 Result.buildSuccess(true) : Result.buildFail("保存失败", 500);
+    }
+
+    /***
+     * 返回系统中所有的咨询师信息
+     *
+     */
+    @GetMapping("/counselors")
+
+    public Result<Set<UserInfo>> counselors(){
+        return userInfoService.findAllCounselors();
     }
 }
 

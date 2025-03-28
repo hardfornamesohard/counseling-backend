@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.TableField;
 
+import java.util.Objects;
+
 @TableName("counseling_userinfo")
 public class UserInfo {
 
@@ -78,6 +80,18 @@ public class UserInfo {
 
     public void setUid(Integer uid) {
         this.uid = uid;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        UserInfo userInfo = (UserInfo) o;
+        return Objects.equals(gender, userInfo.gender) && Objects.equals(age, userInfo.age) && Objects.equals(uid, userInfo.uid);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(gender, age, uid);
     }
 }
 

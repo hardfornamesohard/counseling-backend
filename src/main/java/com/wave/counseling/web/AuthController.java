@@ -34,13 +34,17 @@ public class AuthController {
 
         response.setHeader("Session", sessionId);
         response.setHeader("x-nickname", user.getNickname());
-        response.setHeader("x-role", String.valueOf(user.getRole()));
+        response.setHeader("x-role", String.valueOf(user.getRole().getVal()));
+
+        response.setHeader("x-uid", String.valueOf(user.getId()));
         SessionManager.addSession(sessionId, user);
         return Result.buildSuccess("登录成功");
     }
 
     @PostMapping("/register")
     public Result register(@RequestBody User user){
+        System.out.println(user);
+
         try {
             userService.register(user);
         }catch (Exception e){
@@ -64,7 +68,7 @@ public class AuthController {
     @GetMapping("/admin-api/users")
     public Result<List<User>> getUsers(@RequestParam("session") String session){
         final User user = SessionManager.find(session);
-        if (user.getRole() != 2){
+        if (user.getRole().getVal() != 2){
             return Result.buildFail("此接口仅管理员访问", 401);
         }
         final List<User> all = userService.findAll();

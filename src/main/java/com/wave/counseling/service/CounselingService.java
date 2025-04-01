@@ -9,4 +9,6 @@ import com.wave.counseling.web.Result;
  */
 public interface CounselingService {
     Result<String> book(CounselingBook book);
+
+    Result<String> getMyCounselings(int id);
 }

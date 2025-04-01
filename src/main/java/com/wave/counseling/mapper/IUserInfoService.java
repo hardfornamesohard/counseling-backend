@@ -10,5 +10,5 @@ import org.springframework.stereotype.Component;
  * @date 2025/3/4 17:39
  */
 @Component
-public class IUserInfoService extends ServiceImpl<UserInfoMapper, UserInfo> {
+public class IUserInfoService extends ServiceImpl<UserInfoMapper, UserInfo> implements IService<UserInfo> {
 }

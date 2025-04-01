@@ -68,6 +68,9 @@ public class UserInfoServiceImpl implements UserInfoService {
                 .stream()
                 .map(User::getId) // 提取 ID 列表
                 .collect(Collectors.toList());
+        if(ids == null || ids.isEmpty()){
+            return Result.buildSuccess("");
+        }
         final List<UserInfo> list = userInfoService.lambdaQuery()
                 .in(UserInfo::getUid, ids)
                 .list();

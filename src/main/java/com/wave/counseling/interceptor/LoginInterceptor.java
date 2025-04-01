@@ -8,7 +8,6 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  * @author ziwei.huang
@@ -25,7 +24,8 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         }
         String url = request.getRequestURI();
         // URL:除了登录请求外，其他的URL都进行拦截控制
-        if (url.indexOf("/register") >= 0 || url.indexOf("auth") >= 0 || url.indexOf("/logout") >= 0) {
+        if (url.indexOf("/images") > 0 || url.indexOf("/register") >= 0 || url.indexOf("auth") >= 0 || url.indexOf("/logout") >= 0) {
+            System.out.println(url);
             return true;
         }
         // 获取Session

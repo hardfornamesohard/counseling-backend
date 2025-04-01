@@ -34,4 +34,12 @@ public enum Role {
         }
         throw new IllegalArgumentException("Unexpected value: " + val);
     }
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "val=" + val +
+                ", role='" + role + '\'' +
+                '}';
+    }
 }

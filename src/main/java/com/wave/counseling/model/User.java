@@ -70,12 +70,12 @@ public class User {
         this.secret = secret;
     }
 
-    public int getRole() {
-        return role.getVal();
+    public Role getRole() {
+        return role;
     }
 
     public void setRole(int val) {
-        this.role = Role.values()[val];
+        this.role = Role.fromValue(val);
     }
 
     public String getEmail() {

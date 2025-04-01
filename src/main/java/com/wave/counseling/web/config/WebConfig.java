@@ -20,6 +20,7 @@ public class WebConfig implements WebMvcConfigurer {
         // 获取当前用户目录
         String userDir = System.getProperty("user.dir");
         String resourceLocation = "file:" + userDir + "/images/avatar/";
+        System.out.println(resourceLocation);
 
         registry.addResourceHandler("/images/avatar/**")
                 .addResourceLocations(resourceLocation);
@@ -28,7 +29,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
 
-        registry.addInterceptor(interceptor);
+//        registry.addInterceptor(interceptor);
 
         WebMvcConfigurer.super.addInterceptors(registry);
     }

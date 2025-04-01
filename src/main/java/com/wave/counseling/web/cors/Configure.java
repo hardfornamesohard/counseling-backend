@@ -10,7 +10,7 @@ public class Configure implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**") // 允许所有路径跨域
-                .allowedOrigins("http://localhost:3000") // 允许来自 http://localhost:3000 的请求
+                .allowedOrigins("http://127.0.0.1:3000", "http://localhost:3000") // 允许来自 http://localhost:3000 的请求
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // 允许的请求方法
                 .allowedHeaders("*") // 允许所有请求头
                 .exposedHeaders("*") // 暴露 Session 头给前端

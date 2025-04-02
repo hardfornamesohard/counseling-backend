@@ -9,6 +9,8 @@ public class Result<T> {
     public String message;
     public T data;
 
+    public  T data2;
+
     public static Result buildSuccess(String message){
         return new Result(200, message, null);
     }
@@ -58,5 +60,10 @@ public class Result<T> {
 
     public static Result<String> intercepted(){
         return new Result<>(401, "请求被拦截", null);
+    }
+
+    public Result setData2(T data2){
+        this.data2 = data2;
+        return this;
     }
 }

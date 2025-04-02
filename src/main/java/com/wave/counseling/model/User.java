@@ -128,12 +128,19 @@ public class User {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(name, user.name) && role == user.role && Objects.equals(email, user.email);
+        return id == user.id;
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(name, role, email);
+    }
+
+    public User() {
+    }
+
+    public User(int id) {
+        this.id = id;
     }
 }
 

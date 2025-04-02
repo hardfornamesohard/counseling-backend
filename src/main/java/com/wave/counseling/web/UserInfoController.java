@@ -12,6 +12,7 @@ import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.Set;
 import java.util.UUID;
 
@@ -90,7 +91,7 @@ public class UserInfoController {
      */
     @GetMapping("/counselors")
 
-    public Result<Set<UserInfo>> counselors(){
+    public Result<HashMap<UserInfo, Boolean>> counselors(){
         return userInfoService.findAllCounselors();
     }
 }

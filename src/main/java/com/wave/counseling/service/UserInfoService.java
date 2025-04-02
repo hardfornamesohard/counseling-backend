@@ -4,6 +4,7 @@ import com.wave.counseling.model.User;
 import com.wave.counseling.model.UserInfo;
 import com.wave.counseling.web.Result;
 
+import java.util.HashMap;
 import java.util.Set;
 
 /**
@@ -14,6 +15,6 @@ public interface UserInfoService {
     UserInfo findByUser(User user);
     boolean saveOrUpdate(UserInfo userInfo);
 
-    Result<Set<UserInfo>> findAllCounselors();
+    Result<HashMap<UserInfo, Boolean>> findAllCounselors();
 
 }

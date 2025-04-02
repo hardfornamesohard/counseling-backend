@@ -9,10 +9,13 @@ import com.wave.counseling.model.Role;
 import com.wave.counseling.model.User;
 import com.wave.counseling.model.UserInfo;
 import com.wave.counseling.service.UserInfoService;
+import com.wave.counseling.utils.SessionManager;
 import com.wave.counseling.web.Result;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -59,7 +62,7 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
-    public Result<Set<UserInfo>> findAllCounselors() {
+    public Result<HashMap<UserInfo, Boolean>> findAllCounselors() {
 
         List<Integer> ids = userService.lambdaQuery()
                 .eq(User::getRole, Role.Counselor.getVal()) // 查询条件
@@ -75,7 +78,24 @@ public class UserInfoServiceImpl implements UserInfoService {
                 .in(UserInfo::getUid, ids)
                 .list();
 
+        final Set<User> users = SessionManager.onlineCounselor();
+        final List<Boolean> onlines = new ArrayList<>();
 
-        return Result.buildSuccess(new HashSet<>(list));
+        for (UserInfo userInfo : list) {
+            boolean added = false;
+            for (User user : users) {
+                if (userInfo.getUid() == user.getId()){
+                    onlines.add(true);
+                    added = true;
+                    break;
+                }
+            }
+            if (!added) {
+                onlines.add(false);
+            }
+
+
+        }
+        return Result.buildSuccess(list).setData2(onlines);
     }
 }
